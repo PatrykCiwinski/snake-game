@@ -1,0 +1,52 @@
+import turtle
+import time
+INITIAL_POS=[(0,0),(-20,0),(-40,0)]
+MOVE_DISTANCE=20
+UP=90
+DOWN=270
+LEFT=180
+RIGHT=0
+
+
+class Snake:
+    def __init__(self):
+        self.segments = []
+        self.create()
+
+
+
+    def create(self):
+        for position in INITIAL_POS:
+            self.add_seqment(position)
+
+    def add_seqment(self, position):
+        snake_piece = turtle.Turtle()
+        snake_piece.shape("square")
+        snake_piece.color("SpringGreen")
+        snake_piece.penup()
+        snake_piece.goto(position)
+        self.segments.append(snake_piece)
+
+    def move(self):
+        for segment_num in range(len(self.segments) - 1, 0, -1):
+            new_x = self.segments[segment_num - 1].xcor()
+            new_y = self.segments[segment_num - 1].ycor()
+            self.segments[segment_num].goto(new_x, new_y)
+        self.segments[0].forward(MOVE_DISTANCE)
+
+    def up(self):
+        if self.segments[0].heading()!=DOWN:
+            self.segments[0].setheading(UP)
+
+    def down(self):
+        if self.segments[0].heading()!=UP:
+            self.segments[0].setheading(DOWN)
+    def left(self):
+        if self.segments[0].heading()!=RIGHT:
+            self.segments[0].setheading(LEFT)
+    def right(self):
+        if self.segments[0].heading()!=LEFT:
+            self.segments[0].setheading(RIGHT)
+
+    def extension(self):
+        self.add_seqment(self.segments[-1].position())
